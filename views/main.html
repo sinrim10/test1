@@ -16,7 +16,7 @@
             var socket = io.connect('http://localhost:4000');
             socket.on('test',function(data){
                 alert('Data : ' + data);
-                socket.emit('clientmsg',{'msg':'cilent msg'});
+                socket.emit('clientmsg',{'msg':'ttt msg'});
             });
 
             socket.on('servermsg',function(data){
