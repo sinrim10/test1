@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script>
+
+<body>
+    <h1>로딩</h1>
+    <script>
+
+        $(document).ready(function(){
+
+            var socket = io.connect('http://localhost:4000');
+            socket.on('test',function(data){
+                alert('Data : ' + data);
+                socket.emit('clientmsg',{'msg':'cilent msg'});
+            });
+
+            socket.on('servermsg',function(data){
+                alert('server msg :' + data['msg']);
+            })
+
+        });
+
+    </script>
+</body>
+</html>
