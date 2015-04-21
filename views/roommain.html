@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script>
+<script>
+    $(document).ready(function(){
+        var socket = io.connect('http://localhost:4000');
+       //방만들기
+        $("#room_make").click(function(){
+            var data = {"roomname":$("#roomname").val(),
+                        "nickname":$("#nickname").val()}
+            socket.emit("roommake",data);
+            $("#roommake").val("");
+            nickname = $("#nickname").val();
+        });
+
+    });
+
+    function getRoomList(){
+        $.ajax({
+            type:"get",
+            dataType:"json",
+            url:"/roomlist",
+            success:function(data){},
+            error: function(err){}
+
+        });
+
+    }
+</script>
+<body>
+    <fieldset id="roommake">
+        <legend>방만들기</legend>
+        방이름 : <input id="roomname" type="text"><br>
+        닉네임 : <input id="nickname" type="text"><br>
+        <input id="room_make" type="button" value="방만들기">
+    </fieldset>
+    <fieldset id="room">
+        <legend>개설된방목록</legend>
+        <div id="roomlist"></div>
+
+</body>
+</html>

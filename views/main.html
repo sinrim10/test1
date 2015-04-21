@@ -4,27 +4,46 @@
     <meta charset="UTF-8">
     <title></title>
 </head>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script>
 
 <body>
-    <h1>로딩</h1>
+    <div id="chatlog"></div>
+    <div><input id="nickname" type="text"><input id="message-text" type="text"></div>
+    <!--<div><button id="message-button" type="button">전송</button></div>-->
+    <div><input type="button" id="message-button" value="전송"></div>
     <script>
-
+        var text = "hi";
+        var name = "lsk";
         $(document).ready(function(){
 
             var socket = io.connect('http://localhost:4000');
             socket.on('test',function(data){
-                alert('Data : ' + data);
-                socket.emit('clientmsg',{'msg':'ttt msg'});
+                socket.emit('clientmsg',{'msg':text});
             });
 
             socket.on('servermsg',function(data){
-                alert('server msg :' + data['msg']);
-            })
+                //name = 'other';
+                $('#chatlog').append("<div>"+data.name +" : "+ data.text +"<div>");
+            });
+
+            $('#message-button').click(function(){
+                var msg = $("#message-text").val();
+                text = msg;
+                name = $("#nickname").val();
+                data = {"text":text , "name":name};
+                console.log("text : "  + text);
+                socket.emit('clientmsg',data);
+                $('#chatlog').append("<div> me :" +text+"<div>");
+            });
 
         });
 
+        function writeMessage(){
+
+        }
+
     </script>
+
 </body>
 </html>

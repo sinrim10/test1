@@ -35,10 +35,17 @@ app.use('/main', route);
 var io = socketio.listen(httpserver);
 
 io.sockets.on('connection',function(socket){
-            socket.emit('test','hello');
+            socket.on('roommake',function(data){
+               socket.join(data.roomname);
+               //방만들기
+               socket.set('roomname',data.roomname);
+               socket.set('nickname',data.nickname);
+                //set 함수를 사용하여 클라이언트의 값을 저장할 수 있다. get함수를 이용하여 값을 호출할 수 있다.
+
+            });
             socket.on('clientmsg',function(data){
-                console.log(data.name +" : "+ data.text);
-                socket.broadcast.emit('servermsg',data);
+                console.log(' ' + data['msg']);
+                socket.broadcast.emit({'msg':data['msg']});
             });
         }
 );
