@@ -7,7 +7,7 @@ var router = express.Router();
 var path = require('path');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/roommake', function(req, res, next) {
    //res.sendfile(__dirname+'/main.html');
    res.sendfile('views/roommain.html');
  /*  fs.readFile("views/main.html",function(err,data){
@@ -28,6 +28,9 @@ router.get('/enter', function(req, res, next) {
     }
     });*/
 });
+router.get('/login',function(req,res,next){
+   res.sendfile('views/login.html');
+})
 
 
 module.exports = router;

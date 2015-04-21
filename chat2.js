@@ -43,9 +43,15 @@ io.sockets.on('connection',function(socket){
                 //set 함수를 사용하여 클라이언트의 값을 저장할 수 있다. get함수를 이용하여 값을 호출할 수 있다.
 
             });
+            socket.on('login',function(data){
+                //로그인정보알리기
+                io.set('test','aaaa');
+                socket.broadcast.emit('loginmsg',data.id +" Enter.");
+                console.log('ddd' + io.get('test',function(){}));
+            });
             socket.on('clientmsg',function(data){
                 console.log(' ' + data['msg']);
-                socket.broadcast.emit({'msg':data['msg']});
+
             });
         }
 );

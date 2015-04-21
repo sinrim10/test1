@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script>
+<script>
+    $(document).ready(function(){
+        var socket = io.connect('http://localhost:4000');
+        //방만들기
+        $("#signin").click(function(){
+            var data = {"id":$("#id").val(),
+                "psw":$("#psw").val()}
+            socket.emit("login",data);
+            location.href ='/main/enter'
+        });
+    });
+
+
+</script>
+<body>
+    <fieldset id="login">
+        <legend>Sign in</legend>
+        <h3>Username or Email</h3><br>
+        <input id="id" type="text"><br>
+        <h3>Password</h3>
+        <input id="psw" type="password"><br><br>
+        <input id="signin" type="button" value="Sign in">
+    </fieldset>
+</body>
+</html>

@@ -27,6 +27,10 @@
                 $('#chatlog').append("<div>"+data.name +" : "+ data.text +"<div>");
             });
 
+            socket.on('loginmsg',function(data){
+                //name = 'other';
+                $('#chatlog').append("<div>"+data+"<div>");
+            });
             $('#message-button').click(function(){
                 var msg = $("#message-text").val();
                 text = msg;
