@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+<script src="http://localhost:3033/socket.io/socket.io.js"></script>
+<body>
+    <div id="log">
+        <span>아이디 : <input type="text" id="userid"></span>
+        <span>방이름 : <input type="text" id="roomname"></span>
+        <span><input type="button" id="enter" value="입장"></span>
+    </div>
+    <div id="chat" style="display:none;">
+        <div style="width: 300px; height: 300px; border: solid 1px;" id="txtarea">a
+            <div id ="txtappend">b</div>
+        </div>
+    </div>
+    <input type="text" style="width:255px" id="txt"> <input type="button" value="Enter" id="btn">
+<script>
+    $(document).ready(function(){
+       var socket = io.connect('http://localhost:3033');
+
+        $("#enter").click(function(){
+            var userid = document.getElementById("userid");
+            var roomname  = document.getElementById("roomname");
+            console.log('user ' + userid.val);
+            socket.emit('join',{
+                'userid':userid.value
+                ,'roomname':roomname.value
+            });
+            document.getElementById('log').style.display = 'none';
+            document.getElementById('chat').style.display = 'block';
+        });
+        socket.on('join',function(data){
+            alert(data);
+            $('#txtappend').append('<div style="margin:0px">'+data+'님이 들어왔습니다.</div>');
+
+        });
+        $('#btn').click(function(){
+            var message = $('#txt').val();
+            socket.emit('message',message);
+        });
+        socket.on('message',function(data){
+            $('#txtappend').append('<div style="margin:0px">'+data+'</div>');
+            $('#txt').val('');
+        })
+    });
+
+
+</script>
+</body>
+</html>

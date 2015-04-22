@@ -45,9 +45,12 @@ io.sockets.on('connection',function(socket){
             });
             socket.on('login',function(data){
                 //로그인정보알리기
-                io.set('test','aaaa');
+                socket.join(data.id);
+                //방만들기
+                socket.set('roomname',data.id);
+                socket.set('nickname',data.text);
                 socket.broadcast.emit('loginmsg',data.id +" Enter.");
-                console.log('ddd' + io.get('test',function(){}));
+                console.log('ddd' + socket.get('roomname',function(){}));
             });
             socket.on('clientmsg',function(data){
                 console.log(' ' + data['msg']);
