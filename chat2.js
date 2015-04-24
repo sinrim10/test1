@@ -38,17 +38,11 @@ io.sockets.on('connection',function(socket){
             socket.on('roommake',function(data){
                socket.join(data.roomname);
                //방만들기
-               socket.set('roomname',data.roomname);
-               socket.set('nickname',data.nickname);
-                //set 함수를 사용하여 클라이언트의 값을 저장할 수 있다. get함수를 이용하여 값을 호출할 수 있다.
-
             });
             socket.on('login',function(data){
                 //로그인정보알리기
                 socket.join(data.id);
                 //방만들기
-                socket.set('roomname',data.id);
-                socket.set('nickname',data.text);
                 socket.broadcast.emit('loginmsg',data.id +" Enter.");
                 console.log('ddd' + socket.get('roomname',function(){}));
             });
